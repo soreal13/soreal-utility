@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<div>단일 텍스트 버전</div><br/>
+<select name="translate-type">
+    <option value="papago">파파고</option>
+    <option value="google" disabled>구글</option>
+</select><input type="file" id="file-selector"><br/>
+<div id="output"></div><br/>
+<button type="button" onClick="makeTextFile()">텍스트다운-번역스크립트</button>
+</body>
+
+<script>
+    const fileSelector = document.getElementById('file-selector');
+    var script = "";
+
+    fileSelector.addEventListener('change', (e) => {
+        const file = event.target.files;
+        var filePromise = file[0].text();
+        filePromise.then(
+            papagoDoing(this)
+        );
+    })
+
+    function papagoDoing(script) {
+
+    }
+
+    function makeTextFile() {
+        var fileName = fileSelector.files[0].name + "_ko_.txt";
+        var content = script;
+
+        var blob = new Blob([content], {type: 'text/plain'});
+        objURL = window.URL.createObjectURL(blob);
+        if (window.__Xr_objURL_forCreatingFile__) {
+            window.URL.revokeObjectURL(window.__Xr_objURL_forCreatingFile__);
+        }
+        window.__Xr_objURL_forCreatingFile__ = objURL;
+        var a = document.createElement('a');
+        a.download = fileName;
+        a.href = objURL;
+        a.click();
+    }
+
+</script>
+</html>

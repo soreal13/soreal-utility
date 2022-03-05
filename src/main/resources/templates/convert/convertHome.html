@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>convert script</title>
+</head>
+<body>
+    <!-- The `multiple` attribute lets users select multiple files. -->
+  <input type="file" id="file-selector" multiple><br/>
+  <div id="output"></div><br/>
+  <button type="button" onClick="makeTextFile()">텍스트다운-스크립트</button>
+</body>
+
+<script>
+    const fileSelector = document.getElementById('file-selector');
+    var reader = new FileReader();
+    var RegExp = /(「).+(」)/g;
+    var scriptFile = "";
+
+    fileSelector.addEventListener('change', (e) => {
+      const fileList = event.target.files;
+      var file = fileList[0];
+
+       //Promise 객체가 떨어짐.
+      var textPromise = file.text();
+      textPromise.then(
+        function(val) {
+          var text = val;
+          var script = text.match(RegExp);
+          for (var i=0; i<script.length; i++ ){
+            console.log(script[i].replace(/\[.+]/, " "));
+            scriptFile += script[i].replace(/\[.+]/, " ") + "\n";
+          }
+        }
+      ).catch(
+        function(response) {
+          console.log("error:" + response);
+        }
+      )
+  })
+
+  function makeTextFile() {
+    var date = new Date();
+    var fileName = fileSelector.files[0].name + "_" + date.getFullYear() + (date.getMonth()+1) + date.getDate() + ".txt";
+    var content = scriptFile;
+
+    var blob = new Blob([content], {type: 'text/plain'});
+    objURL = window.URL.createObjectURL(blob);
+    if (window.__Xr_objURL_forCreatingFile__) {
+        window.URL.revokeObjectURL(window.__Xr_objURL_forCreatingFile__);
+    }
+    window.__Xr_objURL_forCreatingFile__ = objURL;
+    var a = document.createElement('a');
+    a.download = fileName;
+    a.href = objURL;
+    a.click();
+  }
+</script>
+</html>
