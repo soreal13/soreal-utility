@@ -14,7 +14,7 @@
     <name>soreal-utility</name>
     <description>soreal-utility</description>
     <properties>
-        <java.version>11</java.version>
+        <va.version>11</va.version>
     </properties>
     <dependencies>
         <dependency>
@@ -46,6 +46,12 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.12.3</version>
         </dependency>
     </dependencies>
 

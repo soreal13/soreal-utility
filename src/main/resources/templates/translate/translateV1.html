@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>번역 페이지 V1</title>
+    <script th:src="@{../jquery-3.6.0.min.js}"></script>
 </head>
 <body>
 <div>단일 텍스트 버전</div><br/>
@@ -18,34 +19,36 @@
 
 <script>
     const fileSelector = document.getElementById('file-selector');
-    var script = "";
+    var filename;
 
     fileSelector.addEventListener('change', (e) => {
-        const file = event.target.files;
-        var filePromise = file[0].text();
+        const files = e.target.files;
+        filename = files[0].name;
+        var filePromise = files[0].text();
         filePromise.then(
-            papagoDoing(this)
+            function(val) {
+                papagoDoing(val);
+            }
         );
     })
 
     function papagoDoing(script) {
-
-    }
-
-    function makeTextFile() {
-        var fileName = fileSelector.files[0].name + "_ko_.txt";
-        var content = script;
-
-        var blob = new Blob([content], {type: 'text/plain'});
-        objURL = window.URL.createObjectURL(blob);
-        if (window.__Xr_objURL_forCreatingFile__) {
-            window.URL.revokeObjectURL(window.__Xr_objURL_forCreatingFile__);
+        var data = {
+            "filename" : filename,
+            "text" : script
         }
-        window.__Xr_objURL_forCreatingFile__ = objURL;
-        var a = document.createElement('a');
-        a.download = fileName;
-        a.href = objURL;
-        a.click();
+        $.ajax({
+            type : "POST",
+            url : "/translate/papago/v1",
+            data : JSON.stringify(data),
+            contentType: 'application/json',
+            success : function(response){
+                // alert(response);
+            },
+            error : function (e) {
+                // alert(e.error + "실패");
+            }
+        })
     }
 
 </script>

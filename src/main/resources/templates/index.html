@@ -5,6 +5,15 @@
     <title>index</title>
 </head>
 <body>
-  인덱스 페이지
+    <div>인덱스 페이지</div>
+    <div>로우텍스트 컨버팅
+        <a th:href="@{'/convert/v1'}"> <span id="convertV1">V1</span></a>
+        <a th:href="@{'/convert/v2'}"> <span id="convertV2">V2</span></a>
+        <a th:href="@{'/convert/v3'}"> <span id="convertV3">V3</span></a>
+    </div>
+    <div>텍스트 번역
+        <a th:href="@{'/translate/v1'}"> <span id="translateV1">V1</span></a>
+    </div>
 </body>
+
 </html>
