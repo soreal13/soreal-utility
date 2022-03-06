@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>동기요청 파일 합치기</title>
+</head>
+<body>
+<!-- The `multiple` attribute lets users select multiple files. -->
+<input type="file" id="file-selector" multiple><br/>
+<div id="output"></div><br/>
+<button type="button" onClick="makeTextFile()">텍스트다운-스크립트</button>
+</body>
+<script>
+  var fileSelector = document.getElementById('file-selector');
+  var wholeText = "";
+
+  fileSelector.addEventListener('change', (e) => {
+    var fileList = event.target.files;
+
+    for (var file of fileList) {
+      file.script = makeScript(file);
+    }
+
+    makeWholeText(fileList);
+
+  })
+
+
+  function makeScript(file) {
+    var textPromise = file.text();
+    var script = "";
+    textPromise
+            .then(function(val) {
+              var text = file.name + "\n\n" + val;
+              script = text.replace(/\[.+]/g, ""); // [] 제외
+              script = script.replace(/\n$/gm, '') + "\n\n";
+            })
+  }
+
+  function makeWholeText(fileList) {
+
+    for (const file of fileList) {
+      wholeText += file.script + "\n\n";
+    }
+
+  }
+
+
+  function makeTextFile() {
+    var fileName = fileSelector.files[0].name + "_jp_.txt";
+    var content = wholeText;
+
+    var blob = new Blob([content], {type: 'text/plain'});
+    objURL = window.URL.createObjectURL(blob);
+    if (window.__Xr_objURL_forCreatingFile__) {
+      window.URL.revokeObjectURL(window.__Xr_objURL_forCreatingFile__);
+    }
+    window.__Xr_objURL_forCreatingFile__ = objURL;
+    var a = document.createElement('a');
+    a.download = fileName;
+    a.href = objURL;
+    a.click();
+  }
+
+</script>
+</html>

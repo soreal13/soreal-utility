@@ -30,10 +30,28 @@ public class ViewController {
         return "convert/convertV3.html";
     }
 
+    @GetMapping("/convert/v4")
+    public String convertV4() {
+
+        return "convert/convertV4.html";
+    }
+
+    @GetMapping("/translate")
+    public String translate(){
+
+        return "translate/translateHome.html";
+    }
+
     @GetMapping("/translate/v1")
     public String translateV1(){
 
         return "translate/translateV1.html";
+    }
+
+    @GetMapping("/mydic/v1")
+    public String myDicV1(){
+
+        return "customize/myDicV1.html";
     }
 
 

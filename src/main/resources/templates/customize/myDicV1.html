@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>사용자 정의 사전</title>
+    <script th:src="@{../jquery-3.6.0.min.js}"></script>
+</head>
+<body>
+    <input type="file" id="file-selector" multiple><br/>
+
+</body>
+<script>
+    const fileSelector = document.getElementById('file-selector');
+    var myDic;
+
+    $(document).ready(function(){
+        addEvent();
+    })
+
+    fileSelector.addEventListener('change', (e) => {
+        const fileList = event.target.files;
+        for (const file of fileList) {
+            convertDic(file);
+        }
+    });
+
+    function convertDic(file) {
+        var textPromise = file.text();
+        textPromise.then(
+            function(val) {
+                var filename = file.name;
+                var text = val;
+                var keys = Object.keys(myDic[0]['alice']);
+                for (var i=0; i<keys.length; i++){
+                    var key = keys[i];
+                    text = text.replaceAll(key, myDic[0]['alice'][key]);
+                }
+                makeTextFile(filename, text);
+            }
+        )
+    }
+
+    function makeTextFile(filename, text) {
+        var fileName = "m_" + filename;
+        var content = text;
+
+        var blob = new Blob([content], {type: 'text/plain'});
+        objURL = window.URL.createObjectURL(blob);
+        if (window.__Xr_objURL_forCreatingFile__) {
+            window.URL.revokeObjectURL(window.__Xr_objURL_forCreatingFile__);
+        }
+        window.__Xr_objURL_forCreatingFile__ = objURL;
+        var a = document.createElement('a');
+        a.download = fileName;
+        a.href = objURL;
+        a.click();
+
+    }
+
+    function addEvent() {
+        callMyDic();
+    }
+
+    function callMyDic() {
+        $.ajax({
+            type: "GET",
+            url: "/myDic.json",
+            contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+            success : function (res) {
+                myDic = res;
+            },
+            error : function (e) {
+                console.log("사전 불러오기 실패");
+            }
+        })
+    }
+
+</script>
+</html>
