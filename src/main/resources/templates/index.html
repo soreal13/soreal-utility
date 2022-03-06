@@ -1,23 +1,26 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>index</title>
 </head>
 <body>
     <div>인덱스 페이지</div>
+    <div>Convert</div>
     <div>로우텍스트 컨버팅
         <a th:href="@{'/convert/v1'}"> <span id="convertV1">V1</span></a>
         <a th:href="@{'/convert/v2'}"> <span id="convertV2">V2</span></a>
         <a th:href="@{'/convert/v3'}"> <span id="convertV3">V3 main 수동저장</span></a>
         <a th:href="@{'/convert/v4'}"> <span id="convertV4">V4 java 자동저장</span></a>
-        <a th:href="@{'/convert/v5'}"> <span id="convertV5">V5 GBK</span></a>
+<!--        <a th:href="@{'/convert/v5'}"> <span id="convertV5">V5 GBK</span></a>-->
     </div>
+    <div>Translate</div>
     <div>텍스트 번역
-        <a th:href="@{'/translate'}"> <span id="translateHome">Home</span></a>
+<!--        <a th:href="@{'/translate'}"> <span id="translateHome">Home</span></a>-->
         <a th:href="@{'/translate/v1'}"> <span id="translateV1">V1 papago</span></a>
         <a th:href="@{'/translate/v2'}"> <span id="translateV2">V2 google browse</span></a>
     </div>
+    <div>Customize</div>
     <div>사전 적용
         <a th:href="@{'/mydic/v1'}"> <span id="myDicV1">V1 수동저장</span></a>
         <a th:href="@{'/mydic/v2'}"> <span id="myDicV2">V2 자동저장</span></a>

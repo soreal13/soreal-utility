@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -8,9 +8,9 @@
   <script th:src="@{../jquery-3.6.0.min.js}"></script>
 </head>
 <body>
-  <div>일어 컨버팅 전 로우 ks 뒷단 자바에서 바꿔서 자동저장</div><br/>
-  <!-- The `multiple` attribute lets users select multiple files. -->
-  <select id="filePath">
+  <div>대량 컨버팅</div>
+  <div>로우 ks 앞단에서 정규식 처리 -> 뒷단 자바에서 자동저장</div>
+  <select id="filePath"> <!-- 컨버팅 파일 폴더 지정 위함 -->
     <option value="omocha">omocha</option>
     <option value="diaWWW">diaWWW</option>
     <option value="diaMirro">diaMirror</option>

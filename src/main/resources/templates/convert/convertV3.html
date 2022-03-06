@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>동기요청 파일 합치기</title>
+    <title>수동 파일 합치기</title>
 </head>
 <body>
         <!-- The `multiple` attribute lets users select multiple files. -->
@@ -25,7 +25,6 @@
 
     })
 
-    
     function makeScript(file) {
         var textPromise = file.text();
         textPromise.then(
@@ -37,7 +36,6 @@
           }
         )
     }
-
 
     function makeTextFile() {
     var fileName = fileSelector.files[0].name + "_jp_.txt";
