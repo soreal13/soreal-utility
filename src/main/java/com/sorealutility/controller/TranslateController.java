@@ -23,8 +23,8 @@ public class TranslateController {
     ObjectMapper mapper = new ObjectMapper();
 
     @RequestMapping("papago/v1")
-    public void papagoV1 (@RequestBody TranslateV1 translateV1) throws UnsupportedEncodingException, JsonProcessingException {
-
+    public void papagoV1 (@RequestBody TranslateV1 translateV1)
+            throws UnsupportedEncodingException, JsonProcessingException {
 
       translateService.papagoV1(translateV1);
 

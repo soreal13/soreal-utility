@@ -4,65 +4,67 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>동기요청 파일 합치기</title>
+  <title>CONVERT V4</title>
+  <script th:src="@{../jquery-3.6.0.min.js}"></script>
 </head>
 <body>
-<!-- The `multiple` attribute lets users select multiple files. -->
-<input type="file" id="file-selector" multiple><br/>
-<div id="output"></div><br/>
-<button type="button" onClick="makeTextFile()">텍스트다운-스크립트</button>
+  <div>일어 컨버팅 전 로우 ks 뒷단 자바에서 바꿔서 자동저장</div><br/>
+  <!-- The `multiple` attribute lets users select multiple files. -->
+  <select id="filePath">
+    <option value="omocha">omocha</option>
+    <option value="diaWWW">diaWWW</option>
+    <option value="diaMirro">diaMirror</option>
+    <option value="ararose">ararose</option>
+  </select>
+  <input type="file" id="file-selector" multiple><br/>
+  <div id="output"></div><br/>
 </body>
 <script>
   var fileSelector = document.getElementById('file-selector');
-  var wholeText = "";
 
   fileSelector.addEventListener('change', (e) => {
-    var fileList = event.target.files;
+    var fileList = e.target.files;
 
     for (var file of fileList) {
-      file.script = makeScript(file);
+      file.script = convertFile(file);
     }
-
-    makeWholeText(fileList);
-
   })
 
-
-  function makeScript(file) {
+  var convertFile = function (file) {
     var textPromise = file.text();
-    var script = "";
-    textPromise
-            .then(function(val) {
+    textPromise.then(
+            async function(val) {
+              var filename = file.name;
               var text = file.name + "\n\n" + val;
-              script = text.replace(/\[.+]/g, ""); // [] 제외
+              var script = text.replace(/\[.+]/g, ""); // [] 제외
               script = script.replace(/\n$/gm, '') + "\n\n";
+              console.log(script);
+              await sendFile(filename, script)
             })
   }
 
-  function makeWholeText(fileList) {
+  var sendFile = function (filename, script) {
+      var path = $("#filePath option:selected").val();
+      var data = {
+        "filename" : filename,
+        "script" : script,
+        "path" : path
+      }
 
-    for (const file of fileList) {
-      wholeText += file.script + "\n\n";
-    }
-
+      $.ajax({
+        type : "POST",
+        url : "/convert/v4",
+        data : JSON.stringify(data),
+        contentType : "application/json",
+        success: function (response) {
+          console.log(response);
+        },
+        error: function (response) {
+          console.log(response);
+        }
+      })
   }
 
-
-  function makeTextFile() {
-    var fileName = fileSelector.files[0].name + "_jp_.txt";
-    var content = wholeText;
-
-    var blob = new Blob([content], {type: 'text/plain'});
-    objURL = window.URL.createObjectURL(blob);
-    if (window.__Xr_objURL_forCreatingFile__) {
-      window.URL.revokeObjectURL(window.__Xr_objURL_forCreatingFile__);
-    }
-    window.__Xr_objURL_forCreatingFile__ = objURL;
-    var a = document.createElement('a');
-    a.download = fileName;
-    a.href = objURL;
-    a.click();
-  }
 
 </script>
 </html>

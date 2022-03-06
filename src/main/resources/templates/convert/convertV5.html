@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="gbk">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CONVERT V4</title>
+    <script th:src="@{../jquery-3.6.0.min.js}"></script>
+    <script src="http://bestmike007.com/gbk-lite/lib/gbk-lite.min.js"></script>
+</head>
+<body>
+<div>중어 GBK 파일 컨버팅</div><br/>
+<!-- The `multiple` attribute lets users select multiple files. -->
+<select id="filePath">
+    <option value="omocha">omocha</option>
+    <option value="diaWWW">diaWWW</option>
+    <option value="diaMirro">diaMirror</option>
+    <option value="ararose">ararose</option>
+</select>
+<input type="file" id="file-selector" multiple><br/>
+<div id="output"></div><br/>
+</body>
+<script>
+    var fileSelector = document.getElementById('file-selector');
+    let gbkdecoder = new TextDecoder('gbk');
+
+    fileSelector.addEventListener('change', (e) => {
+        var fileList = e.target.files;
+
+        for (var file of fileList) {
+            file.script = convertFile(file);
+        }
+    })
+
+    var convertFile = function (file) {
+        var textPromise = file.text();
+        textPromise.then(
+            async function(val) {
+
+                var bytes = GBK.toBytes(val);
+                let u8arr = new Uint8Array(bytes);
+
+                debugger;
+                let result = gbkdecoder.decode(u8arr);
+                debugger;
+                var filename = file.name;
+                var text = file.name + "\n\n" + val;
+                var script = text.replace(/\[.+]/g, ""); // [] 제외
+                script = script.replace(/\n$/gm, '') + "\n\n";
+                console.log(script);
+                await sendFile(filename, script)
+            })
+    }
+
+    var sendFile = function (filename, script) {
+        var path = $("#filePath option:selected").val();
+        var data = {
+            "filename" : filename,
+            "script" : script,
+            "path" : path
+        }
+
+        $.ajax({
+            type : "POST",
+            url : "/convert/v4",
+            data : JSON.stringify(data),
+            contentType : "application/json",
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (response) {
+                console.log(response);
+            }
+        })
+    }
+
+
+</script>
+</html>

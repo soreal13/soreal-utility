@@ -36,6 +36,12 @@ public class ViewController {
         return "convert/convertV4.html";
     }
 
+    @GetMapping("/convert/v5")
+    public String convertV5() {
+
+        return "convert/convertV5.html";
+    }
+
     @GetMapping("/translate")
     public String translate(){
 
@@ -48,10 +54,28 @@ public class ViewController {
         return "translate/translateV1.html";
     }
 
+    @GetMapping("/translate/v2")
+    public String translateV2(){
+
+        return "translate/translateV2.html";
+    }
+
     @GetMapping("/mydic/v1")
     public String myDicV1(){
 
         return "customize/myDicV1.html";
+    }
+
+    @GetMapping("/mydic/v2")
+    public String myDicV2(){
+
+        return "customize/myDicV2.html";
+    }
+
+    @GetMapping("/curl")
+    public String curl(){
+
+        return "customize/curl.html";
     }
 
 

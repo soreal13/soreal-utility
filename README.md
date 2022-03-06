@@ -51,6 +51,10 @@ Self-made Script Utilities for Personal Objects
 
 ### 일지
 
+- 2022-03-05 대량 컨버팅, 사전적용 완료
+자바 이용한 자동저장 완료
+크롬 브라우저 이용한 번역 수동 다운페이지 완료
+
 - 2022-03-05 자바 프로젝트 추가
 ConvertV4 작성(프로미스 실패), TranslateV1, myDicV1 작성 
 파파고 번역 자동화를 위한 서버단 추가

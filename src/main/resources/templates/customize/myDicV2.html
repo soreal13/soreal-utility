@@ -6,6 +6,7 @@
     <script th:src="@{../jquery-3.6.0.min.js}"></script>
 </head>
 <body>
+<div>사용자 사전 자바단 자동저장</div>
 <select id="filePath">
     <option value="omocha">omocha</option>
     <option value="diaWWW">diaWWW</option>
@@ -35,34 +36,40 @@
         textPromise.then(
             function(val) {
                 var filename = file.name;
-                var dicOption = $("#filePath option:selected").val();
                 var text = val;
+                var dicOption = $("#filePath option:selected").val();
                 var keys = Object.keys(myDic[0][dicOption]);
                 for (var i=0; i<keys.length; i++){
                     var key = keys[i];
                     text = text.replaceAll(key, myDic[0][dicOption][key]);
                 }
-                makeTextFile(filename, text);
+                sendFile(filename, text);
             }
         )
     }
 
-    function makeTextFile(filename, text) {
-        var fileName = "m_" + filename;
-        var content = text;
-
-        var blob = new Blob([content], {type: 'text/plain'});
-        objURL = window.URL.createObjectURL(blob);
-        if (window.__Xr_objURL_forCreatingFile__) {
-            window.URL.revokeObjectURL(window.__Xr_objURL_forCreatingFile__);
+    var sendFile = function (filename, script) {
+        var path = $("#filePath option:selected").val();
+        var data = {
+            "filename" : filename,
+            "script" : script,
+            "path" : path
         }
-        window.__Xr_objURL_forCreatingFile__ = objURL;
-        var a = document.createElement('a');
-        a.download = fileName;
-        a.href = objURL;
-        a.click();
 
+        $.ajax({
+            type : "POST",
+            url : "/customize/mydic/v1",
+            data : JSON.stringify(data),
+            contentType : "application/json",
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (response) {
+                console.log(response);
+            }
+        })
     }
+
 
     function addEvent() {
         callMyDic();

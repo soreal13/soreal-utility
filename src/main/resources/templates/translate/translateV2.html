@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>번역 페이지 V2</title>
+    <script th:src="@{../jquery-3.6.0.min.js}"></script>
+</head>
+<body>
+<div id="menu">
+    <input type="file" id="file-selector"><br/>
+    <button type="button" onClick="downloadText()">텍스트다운-번역스크립트</button>
+</div>
+<pre>
+    <div id="content">
+    </div>
+</pre>
+</body>
+<script>
+    var fileSelector = document.getElementById('file-selector');
+    var contentSelector = document.getElementById('content');
+
+    $(document).ready(function(){
+        addEvent();
+    })
+
+
+    var loadText = function(){
+        fileSelector.addEventListener('change', (e) => {
+            var files = e.target.files;
+            var filePromise = files[0].text();
+            filePromise.then(function(val){
+                contentSelector.innerHTML=val;
+                // contentSelector.innerHTML.replace(/<BR>/gi, "\n");
+
+            })
+        })
+    }
+
+    var downloadText = function(){
+        var fileName = fileSelector.files[0].name.split('.');
+        fileName = fileName[0] + "_ko_.txt";
+        var content = contentSelector.textContent;
+
+        var blob = new Blob([content], {type: 'text/plain'});
+        objURL = window.URL.createObjectURL(blob);
+        if (window.__Xr_objURL_forCreatingFile__) {
+            window.URL.revokeObjectURL(window.__Xr_objURL_forCreatingFile__);
+        }
+        window.__Xr_objURL_forCreatingFile__ = objURL;
+        var a = document.createElement('a');
+        a.download = fileName;
+        a.href = objURL;
+        a.click();
+
+    }
+
+    var addEvent = function(){
+        loadText();
+    }
+
+</script>
+</html>
