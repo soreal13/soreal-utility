@@ -1,7 +1,7 @@
 package com.sorealutility.service;
 
 
-import com.sorealutility.dto.ConvertV1;
+import com.sorealutility.model.ConvertV1;
 import org.springframework.stereotype.Service;
 
 import java.io.File;

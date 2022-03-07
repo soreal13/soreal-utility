@@ -1,4 +1,4 @@
-package com.sorealutility.dto;
+package com.sorealutility.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

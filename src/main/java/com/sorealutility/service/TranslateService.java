@@ -1,6 +1,6 @@
 package com.sorealutility.service;
 
-import com.sorealutility.dto.TranslateV1;
+import com.sorealutility.model.TranslateV1;
 import org.springframework.stereotype.Service;
 
 import java.io.*;

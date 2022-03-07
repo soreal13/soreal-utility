@@ -1,5 +1,4 @@
-package com.sorealutility.dto;
-
+package com.sorealutility.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +8,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter @Setter
-public class ConvertV1 {
+public class MyDicV1 {
 
     private String filename;
 

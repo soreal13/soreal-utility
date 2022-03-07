@@ -2,7 +2,7 @@ package com.sorealutility.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.sorealutility.dto.TranslateV1;
+import com.sorealutility.model.TranslateV1;
 import com.sorealutility.service.TranslateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;

@@ -1,7 +1,7 @@
 package com.sorealutility.controller;
 
 
-import com.sorealutility.dto.ConvertV1;
+import com.sorealutility.model.ConvertV1;
 import com.sorealutility.service.ConvertService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
