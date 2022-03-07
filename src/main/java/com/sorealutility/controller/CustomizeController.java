@@ -5,6 +5,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sorealutility.model.MyDicV1;
 import com.sorealutility.service.CustomizeService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +22,9 @@ public class CustomizeController {
 
     @Autowired
     private CustomizeService customizeService;
+
+    private final Logger logger = LoggerFactory.getLogger("CustomizeController: ");
+
 
     @PostMapping("/mydic/v1")
     public void myDicV1 (@RequestBody MyDicV1 myDicV1) {

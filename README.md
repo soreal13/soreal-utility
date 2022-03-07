@@ -17,7 +17,6 @@ Self-made Script Utilities for Personal Objects
 - 여러개 추가해도 비동기 때문에 랜덤으로 스크립트 추가됨
 
 ### V4
-- 순서 문제 해결
 - 자바 단에서 파일 개개별로 저장 
 - 정규식 문제로 컨버팅은 자바스크립트로 해결
 

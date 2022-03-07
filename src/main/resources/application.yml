@@ -1,2 +1,24 @@
 server:
   port: 27772
+  #  context-path:
+
+
+#spring:
+#  profiles:
+#    acvive:
+#  aplication:
+#    name:
+
+logging:
+  level: trace
+
+#soreal:
+#  translate:
+#    papago:
+#      client-id:
+#      client-secret:
+#    google:
+#    amazon:
+
+
+
