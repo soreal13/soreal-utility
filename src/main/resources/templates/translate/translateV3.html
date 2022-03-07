@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>번역 페이지 V2</title>
+    <script th:src="@{../jquery-3.6.0.min.js}"></script>
+</head>
+<body>
+<div id="menu">
+    <div>구글 브라우저 번역 이용한 자동 저장</div>
+    <input type="file" id="file-selector" multiple><br/>
+    <button type="button" onClick="downloadText()">텍스트다운-번역스크립트</button>
+</div>
+<pre>
+    <div id="content">
+    </div>
+</pre>
+</body>
+<script>
+    var fileSelector = document.getElementById('file-selector');
+    var contentSelector = document.getElementById('content');
+    var timer = ms => new Promise(res => setTimeout(res, ms));
+
+    var pureTextObject = [];
+    var translatedTextObject = [];
+
+    $(document).ready(function(){
+        addEvent();
+    })
+
+
+    // 파일 선택시 이벤트 트리거
+    var fileEvent = function () {
+        fileSelector.addEventListener('change', (e) => {
+            var files = e.target.files;
+            selectfile(files);
+        })
+    }
+
+    // 개별 파일 선택
+    var selectfile = async function (files) {
+        for (var file of files) {
+            console.log("select: " + file.name);
+            await getFiletext(file);
+            console.log("select end: " + file.name);
+        }
+        console.log("All files selected and got pure texts");
+
+        //자동 번역 매크로
+        googleTranslate();
+    }
+
+    // 개별 파일 text 호출
+    var getFiletext = async function (file) {
+        console.log("startGetPureText: " + file.name);
+        var fileText = file.text();
+        fileText.then(await function (val){
+            console.log("getPureText:" + file.name);
+            pureTextObject.push(
+                {
+                    "filename" : file.name,
+                    "text" : val
+                }
+            )
+        })
+    }
+
+    // 구글 브라우저 자동 번역
+    var googleTranslate = async function () {
+        for (var o of pureTextObject) {
+            console.log("translate: " + o.filename);
+            await loadText(o).then(getTranslatedText(o));
+        }
+        console.log("translate completed");
+        sendTranslatedObject();
+    }
+
+    // 화면에 pureText 뿌리고 기다리기
+    var loadText = async function (val) {
+        contentSelector.innerHTML = val['text'];
+        await timer(3000);
+    }
+
+    var getTranslatedText = function (val) {
+        translatedTextObject.push({
+            "filename" : val.name,
+            "text" : contentSelector.textContent
+        })
+    }
+
+    // 번역 오브젝트 자바로 보내기
+    var sendTranslatedObject = function () {
+        console.log(translatedTextObject);
+        $.ajax({
+            type: "POST",
+            data: JSON.stringify(translatedTextObject),
+            contentType : "application/json",
+            url : "/translate/v3",
+            success: function (res) {
+                console.log(res);
+            },
+            error: function (e) {
+                console.log("error! " + e);
+            }
+        })
+    }
+
+
+
+
+
+
+
+
+    var loadText = function(){
+        fileSelector.addEventListener('change', (e) => {
+            var files = e.target.files;
+            var filePromise = files[0].text();
+            filePromise.then(function(val){
+                contentSelector.innerHTML=val;
+                // contentSelector.innerHTML.replace(/<BR>/gi, "\n");
+
+            })
+        })
+    }
+
+    var downloadText = function(){
+        var fileName = fileSelector.files[0].name.split('.');
+        fileName = fileName[0] + "_ko_.txt";
+        var content = contentSelector.textContent;
+
+        var blob = new Blob([content], {type: 'text/plain'});
+        objURL = window.URL.createObjectURL(blob);
+        if (window.__Xr_objURL_forCreatingFile__) {
+            window.URL.revokeObjectURL(window.__Xr_objURL_forCreatingFile__);
+        }
+        window.__Xr_objURL_forCreatingFile__ = objURL;
+        var a = document.createElement('a');
+        a.download = fileName;
+        a.href = objURL;
+        a.click();
+
+    }
+
+    // 전역 이벤트 등록
+    var addEvent = function(){
+        fileEvent();
+    }
+
+</script>
+</html>

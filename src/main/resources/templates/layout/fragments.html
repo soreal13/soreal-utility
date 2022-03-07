@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="head">
+    <script type="text/javascript"  th:inline="javascript">
+        /*<![CDATA[*/
+        var contextPath = /*[[${#httpServletRequest.getContextPath()}]]*/ ;
+
+        window.soreal = new Object();
+        window.soreal.fn = {};
+        window.soreal.dataSource = {};
+        /*]]>*/
+
+    </script>
+</th:block>
+
+</html>

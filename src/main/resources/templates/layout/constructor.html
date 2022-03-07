@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<section>
+    <div class="wrapper">
+        <div class="card-header"></div>
+        <div class="card-body">
+            <div class="row">
+                <div class="chart-wrap">
+                    <div class="chart-body">
+                        <canvas class="myChart"></canvas>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <table class="card-table">
+                    <thead>
+                        <tr>
+                            <th>1</th>
+                            <th>2</th>
+                            <th>3</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<div id="dialog">
+
+</div>
+
+</body>
+
+<script type="text/javascript" th:inline="javascript">
+    soreal.api ={
+        set type(type) {
+            this.url = contextPath + this[type];
+        },
+        url: "",
+    }
+
+    async function initData() {
+        let data = await getData('convert', {});
+        $('.card-table').html(new convertClass(data).getTable());
+
+        await chartGenerator(data);
+
+    }
+
+    class convertClass {
+        constructor(data) {
+            this.dataset = data;
+        }
+        getTable() {
+            let html = '';
+            for (let i = 0; i< this.dataset.length; i++) {
+                html += '<tr>';
+                html += '<td>'+this.dataset[i].column+'</td>';
+                html += '</tr>';
+            }
+            return html;
+        }
+    }
+
+    let getData = function (apiId, param) {
+        return new Promise(function(resolve, reject){
+            soreal.api.type = apiId;
+            let url = soreal.api.url;
+
+            if(param) {
+                url += "?" + sLib.util.setParameter(param);
+            }
+
+            $.ajax({
+                type: "GET",
+                contentType: "application/json; charset=utf-8",
+                url: url,
+                success: function (response) {
+                    resolve(response.body);
+                },
+                error: function (xhr, textStatus, error) {
+                    reject(xhr);
+                }
+            });
+        })
+    }
+
+    function chartGenerator(data) {
+        $(".myChart").each(function (index, element) {
+            let myChart = new Chart(element, {
+                type: 'bar',
+                data: {
+                    labels: [],
+                    datasets: []
+                },
+                options: {
+                  responsive : true,
+                },
+                plugins: {
+
+                },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            min: 0,
+                            maxTicksLimit: 6
+                        },
+                    }],
+                    xAxes: [{
+                        gridLines: {
+                            display: false
+                        }
+                    }]
+                }
+            }); //myChart End
+
+        })
+    }
+
+
+    function dateFormat(date){
+        const result = date ? date.substr(0, 4) + "-" + date.substr(4, 6) : '';
+        return result;
+    }
+
+    $(document).ready(function() {
+        initData();
+    })
+
+
+</script>
+
+
+</html>
