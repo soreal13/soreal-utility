@@ -16,8 +16,8 @@ public class TranslateService {
 
     public static void papagoV1(TranslateV1 translateV1) {
 
-        String clientId = "a1H6xIT5EGDKdC6Ridd3"; //애플리케이션 클라이언트 아이디값";
-        String clientSecret = "ju1yx11Roe"; //애플리케이션 클라이언트 시크릿값";
+        String clientId = ""; //애플리케이션 클라이언트 아이디값";
+        String clientSecret = ""; //애플리케이션 클라이언트 시크릿값";
 
         String apiURL = "https://openapi.naver.com/v1/papago/n2mt";
 
