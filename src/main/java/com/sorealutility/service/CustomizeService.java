@@ -1,20 +1,25 @@
 package com.sorealutility.service;
 
-
 import com.sorealutility.model.MyDicV1;
+import org.springframework.beans.factory.annotation.Value;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
 
+@Slf4j
 @Service
 public class CustomizeService {
+
+    @Value("${soreal.path.peterpen}")
+    private static String peterpen;
 
 
     public static void saveAsTxt(MyDicV1 myDicV1) {
 
-        String filename = "C:\\Users\\sodyn\\Desktop\\touched\\"
+        String filename = peterpen
                 + myDicV1.getPath()
                 + "\\dic\\"
                 + myDicV1.getFilename()
