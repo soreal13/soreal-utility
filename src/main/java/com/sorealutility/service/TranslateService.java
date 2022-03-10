@@ -1,6 +1,7 @@
 package com.sorealutility.service;
 
 import com.sorealutility.model.TranslateV1;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.io.*;
@@ -10,9 +11,9 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
+@Slf4j
 @Service
 public class TranslateService {
-
 
     public static void papagoV1(TranslateV1 translateV1) {
 
