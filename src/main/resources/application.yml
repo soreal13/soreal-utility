@@ -9,9 +9,6 @@ server:
 #  aplication:
 #    name:
 
-logging:
-  level: trace
-
 #soreal:
 #  translate:
 #    papago:

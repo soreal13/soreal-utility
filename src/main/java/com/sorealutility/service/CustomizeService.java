@@ -14,11 +14,12 @@ public class CustomizeService {
 
     public static void saveAsTxt(MyDicV1 myDicV1) {
 
-        String filename = "C:\\Users\\sodyn\\Desktop\\touched\\"
+        String filename = "C:\\Users\\sodyn\\Desktop\\otome-script\\"
                 + myDicV1.getPath()
                 + "\\dic\\"
-                + myDicV1.getFilename()
-                + ".txt";
+//                + "d_"
+                + myDicV1.getFilename();
+//                + ".txt";
 
         try {
             File file = new File(filename);

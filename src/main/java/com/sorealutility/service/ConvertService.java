@@ -13,7 +13,7 @@ public class ConvertService {
 
     public static void saveTxtFile(ConvertV1 convertV1) {
 
-        String filename = "C:\\Users\\sodyn\\Desktop\\touched\\"
+        String filename = "C:\\Users\\sodyn\\Desktop\\otome-script\\"
                 + convertV1.getPath()
                 + "\\jp\\"
                 + convertV1.getFilename()
