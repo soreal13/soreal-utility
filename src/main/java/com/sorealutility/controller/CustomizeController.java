@@ -49,5 +49,11 @@ public class CustomizeController {
         customizeService.moveFile(address);
     }
 
+    @RequestMapping("encode/v1")
+    public void encodingV1 () {
+
+        customizeService.encodeFile();
+    }
+
 
 }

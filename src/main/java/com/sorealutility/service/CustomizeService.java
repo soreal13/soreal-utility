@@ -5,8 +5,7 @@ import org.springframework.beans.factory.annotation.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.io.FileWriter;
+import java.io.*;
 import java.util.ArrayList;
 
 @Slf4j
@@ -58,6 +57,49 @@ public class CustomizeService {
                 System.out.println(e);
             }
         }
+    }
+
+    public static void encodeFile() {
+
+        String[] args = {"C:\\Users\\rladu\\OneDrive\\Desktop\\op01_0.ks"};
+
+        if (args.length == 0) {                   // args.length 는 옵션 개수
+            System.err.println("Input Filename...");
+            System.exit(1);                         // 읽을 파일명을 주지 않았을 때는 종료
+        }
+
+        String outFilename = args[0] + ".txt";    // 출력 파일명 만들기, uni 라는 확장자를 붙여서
+
+
+        try {
+            ////////////////////////////////////////////////////////////////
+            BufferedReader in = new BufferedReader(
+                    new InputStreamReader(
+                            new FileInputStream(args[0]),
+                            "SHIFT-JIS"
+                    )
+            );
+
+            BufferedWriter out = new BufferedWriter(
+                    new OutputStreamWriter(
+                            new FileOutputStream(outFilename),
+                            "utf-8"
+                    )
+            );
+
+            String s;
+
+            while ((s = in.readLine()) != null) {
+                out.write(s); out.newLine();
+            }
+
+            in.close(); out.close();
+            ////////////////////////////////////////////////////////////////
+        } catch (IOException e) {
+            System.err.println(e); // 에러가 있다면 메시지 출력
+            System.exit(1);
+        }
+
     }
 
 
