@@ -70,6 +70,17 @@ VSCode의 Extension 에서 GBK to utf8 다운 수가 가장 많은 확장을 설
 C:\Users\{userdesktop}\.vscode\extensions 
 
 
+까보니 타입스크립트 파일이다. 
+https://code.visualstudio.com/api/get-started/your-first-extension 에 소개한 대로 vscode plugin 제작이 가이드가 잘 되어있는데
+타입추론이 가능한 타입스크립트를 주로 추천한다고 한다.
+
+기왕 이렇게 된거... 하도 오래 전에 써서 까먹었던 node.js 와 어쨌든 대세인 typescript, 언젠가 해야할 이거 지금 해보기로 한다 ㅡㅡ 
+
+핸드북을 찾아 읽는다. https://typescript-kr.github.io/pages/tutorials/typescript-in-5-minutes.html
+
+
+
+
 ## 스크립트 번역
 
 
