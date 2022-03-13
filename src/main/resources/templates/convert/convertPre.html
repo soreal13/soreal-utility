@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>컨버팅 전처리</title>
+    <script th:src="@{../jquery-3.6.0.min.js}"></script>
+</head>
+<body>
+<div>게임 스크립트 전처리 (이름 추출)</div>
+<div>앞단에서 정규식 -> 뒷단에서 대량 저장</div>
+<select id="filePath"> <!-- 컨버팅 파일 폴더 지정 위함 -->
+    <option value="omocha-alice">omocha-alice</option>
+    <option value="diaWWW-alice">diaWWW-alice</option>
+    <option value="diaMirror-alice">diaMirror-alice</option>
+    <option value="ararose">ararose</option>
+    <option value="peterpen">peterpen</option>
+    <option value="School wars">School Wars</option>
+    <option value="Romeo vs Juliet">Romeo vs Juliet</option>
+
+</select>
+<input type="file" id="file-selector" multiple><br/>
+<div id="output"></div><br/>
+</body>
+<script>
+    var fileSelector = document.getElementById('file-selector');
+    fileSelector.addEventListener('change', (e) => {
+        var fileList = e.target.files;
+
+        for (var file of fileList) {
+            file.script = extractName(file);
+        }
+    })
+
+    function extractName(file) {
+        var textPromise = file.text();
+        textPromise.then(
+            async function(val) {
+                var filename = file.name;
+                var text = file.name + "\n\n" + val;
+
+                // 등장인물
+                var names = text.match(/(name=").*?(")/g);
+
+                // 중복 제거
+                var set = new Set(names);
+                names = [...set];
+
+                for (var name of names) {
+                    text = text.replaceAll(name, "](" + name + ")[");
+                }
+
+                // 주인공
+                text = text.replaceAll("heroine", "] (heroine) [ ")
+
+                console.log(text);
+                await sendFile(filename, text)
+            })
+    }
+
+    var sendFile = function (filename, script) {
+        var path = $("#filePath option:selected").val();
+        var data = {
+            "filename" : filename,
+            "script" : script,
+            "path" : path
+        }
+
+        $.ajax({
+            type : "POST",
+            url : "/convert/name",
+            data : JSON.stringify(data),
+            contentType : "application/json",
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (response) {
+                console.log("error! " +response);
+            }
+        })
+    }
+
+
+
+</script>
+</html>
+
+

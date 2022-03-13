@@ -13,16 +13,13 @@ import java.io.FileWriter;
 @Service
 public class ConvertService {
 
-    @Value("${soreal.path.common}")
-    private static String commonPath;
-
     public static void saveTxtFile(ConvertV1 convertV1) {
 
         String filename = "C:\\Users\\sodyn\\Desktop\\otome-script\\"
                 + convertV1.getPath()
                 + "\\jp\\"
-                + convertV1.getFilename()
-                + ".txt";
+                + convertV1.getFilename();
+//                + ".txt";
 
         try {
             File file = new File(filename);
