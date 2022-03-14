@@ -5,6 +5,24 @@
 누군가에게는 도움이 되었으면 하는 삽질 일지.
 
 
+## 파일 추출 
+
+- PSP ISO ROM 구하기
+  https://cdromance.com/  
+  https://www.romsgames.net
+
+여기를 사용했으나 단순히 UMD 에서 파일을 추출하기 귀찮았을 뿐 퀸로제 사의 모든 게임 UMD는 소장하고 있습니다.
+
+- ks 파일 추출하는 순서
+
+1. iso 압축 푼다.
+2. PSP_GAME > USRDIR > DATA 의 보통 DATA0.cpk 파일에 ks 파일이 들어있음.
+3. CPKBrowser 이라는 파일을 통해 all extract 한다. 
+
+그런데 여기서 문제. 대략 2013년 이후 부터의 퀸로제사 게임은 .cpk 확장자가 아닌 .qpk/.qpi 확장자 이다......ㅠㅠㅠㅠㅠㅠㅠㅠ
+
+
+
 ## 파일 컨버팅
 
 
