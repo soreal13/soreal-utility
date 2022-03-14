@@ -12,16 +12,13 @@ import java.util.ArrayList;
 @Service
 public class CustomizeService {
 
-    @Value("${soreal.path.peterpen}")
-    private static String peterpen;
-
 
     public static void saveAsTxt(MyDicV1 myDicV1) {
 
         String filename = "C:\\Users\\sodyn\\Desktop\\otome-script\\"
                 + myDicV1.getPath()
                 + "\\dic\\"
-//                + "d_"
+                + "d_"
                 + myDicV1.getFilename();
 //                + ".txt";
 

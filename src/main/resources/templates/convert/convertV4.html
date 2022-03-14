@@ -12,10 +12,13 @@
   <div>로우 ks 앞단에서 정규식 처리 -> 뒷단 자바에서 자동저장</div>
   <select id="filePath"> <!-- 컨버팅 파일 폴더 지정 위함 -->
     <option value="omocha-alice">omocha-alice</option>
-    <option value="diaWWW-alice">diaWWW</option>
-    <option value="diaMirror-alice">diaMirror</option>
+    <option value="diaWWW-alice">diaWWW-alice</option>
+    <option value="diaMirror-alice">diaMirror-alice</option>
     <option value="ararose">ararose</option>
     <option value="peterpen">peterpen</option>
+    <option value="School wars">School Wars</option>
+    <option value="Romeo vs Juliet">Romeo vs Juliet</option>
+
   </select>
   <input type="file" id="file-selector" multiple><br/>
   <div id="output"></div><br/>
@@ -37,15 +40,16 @@
             async function(val) {
               var filename = file.name;
               var text = file.name + "\n\n" + val;
-              var script = text.replace(/\[.+]/g, ""); // [] 제외
+              var script = text.replace(/\[.*?]/g, ""); // [] 제외
               var path = $("#filePath option:selected").val();
-              if(path == "ararose") {
+
+              // 공백 및 탭 제거 처리
                 script = script.replace(/\n$/gm, '');
                 script = script.replace(/\n$/gm, '');
                 script = script.replaceAll('\t', '');
                 script = script.replaceAll('\r', '');
                 script = script.replace(/\n \n$/gm, '\m');
-              }
+
               script = script.replace(/\n$/gm, '') + "\n\n";
               console.log(script);
               await sendFile(filename, script)

@@ -45,6 +45,12 @@ public class ViewController {
         return "convert/convertV5.html";
     }
 
+    @GetMapping("/convert/pre")
+    public String convertPre() {
+
+        return "convert/convertPre.html";
+    }
+
     @GetMapping("/translate")
     public String translate(){
 

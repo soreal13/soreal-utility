@@ -23,5 +23,11 @@ public class ConvertController {
         convertService.saveTxtFile(convertV1);
     }
 
+    @PostMapping("/name")
+    public void convertName (@RequestBody ConvertV1 convertV1){
+
+        convertService.saveTxtFile(convertV1);
+    }
+
 
 }
