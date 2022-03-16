@@ -116,3 +116,16 @@ var sorealLibrary = function () {
         },
     }
 }
+
+Array.prototype.division = function (n) {
+    var arr = this;
+    var len = arr.length;
+    var cnt = Math.floor(len / n) + (Math.floor(len % n) > 0 ? 1 : 0);
+    var tmp = [];
+
+    for (var i = 0; i < cnt; i++) {
+        tmp.push(arr.splice(0, n));
+    }
+
+    return tmp;
+}
