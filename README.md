@@ -3,7 +3,7 @@
 개인적 용도를 위한 스크립트 소스 모음
 Self-made Script Utilities for Personal Objects
 
-에뮬 & 비쥬얼 노벨 & 오토메 게임 스크립트 추출 및 파일 컨버팅, 번역, 사전 적용 등
+에뮬 & 게임 스크립트 추출 및 파일 컨버팅, 번역, 사전 적용 등
 
 ## Convert
 
